@@ -1,0 +1,40 @@
+<div class="dashboard-container">
+    <header>
+        <h1>Welcome, {{user.name}}!</h1>
+    </header>
+    <nav class="dashboard-nav">
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/projects">My Projects</a></li>
+            <li><a href="/tasks">My Tasks</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <section class="dashboard-main">
+        <div class="projects-summary">
+            <h2>Projects Overview</h2>
+            {{#if projects.length}}
+                <ul>
+                    {{#each projects}}
+                        <li>{{this.name}} - {{this.status}}</li>
+                    {{/each}}
+                </ul>
+            {{else}}
+                <p>You have no projects yet.</p>
+            {{/if}}
+        </div>
+        <div class="tasks-summary">
+            <h2>Tasks Overview</h2>
+            {{#if tasks.length}}
+                <ul>
+                    {{#each tasks}}
+                        <li>{{this.description}} - {{this.status}}</li>
+                    {{/each}}
+                </ul>
+            {{else}}
+                <p>You have no tasks yet.</p>
+            {{/if}}
+        </div>
+    </section>
+</div>

@@ -4,30 +4,30 @@
         <!-- If the user is logged in, display the Dashboard and Logout links otherwise redirect to the login page. -->
         <li><a
             href='/'
-            class='hover-blue'
+            class=''
           >Home</a></li>
         {{#if loggedIn}}
           <li><a
               href='/dashboard'
-              class='hover-blue'
+              class=''
             >Dashboard</a></li>
         {{else}}
           <li><a
               href='/login'
-              class='hover-blue'
+              class=''
             >Dashboard</a></li>
         {{/if}}
         {{#if loggedIn}}
           <li><a
               href='/logout'
               id='logout'
-              class='hover-blue'
+              class=''
             >Logout</a></li>
         {{else}}
           <li><a
               href='/login'
               id='login-form'
-              class='hover-blue'
+              class=''
             >Login</a></li>
         {{/if}}
       </ul>

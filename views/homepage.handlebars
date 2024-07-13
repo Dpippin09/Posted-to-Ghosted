@@ -20,6 +20,21 @@
     </header>
 
     <main>
+        <!-- Display all posts on the homepage with a clickable post to view a specific post. -->
+<div class='container'>
+      <h1>Homepage</h1>
+      {{#each postArray as |post|}}
+      <section class="post-section">
+        <a href='/post/{{post.id}}' class='post-box'>
+          <div class='post-header'>
+            <h3 class='post-title'>Title: {{post.title}}</h3>
+            <p class='post-author'>By: {{User.username}}</p>
+          </div>
+          <div class='post-date'>Posted on: {{format_date}}</div>
+        </a>
+      </section>
+      {{/each}}
+    </div>
         <section class="intro">
             <h2>About Our Site</h2>
             <p>This is a great place to introduce your site and its purpose. Explain what users can do here and why they would want to use your application.</p>

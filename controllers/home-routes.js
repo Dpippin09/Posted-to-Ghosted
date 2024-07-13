@@ -66,7 +66,7 @@ router.post('/login', async (req, res) => {
   // Try catch block with async/await to catch errors.
   try {
     // Find the user by the email entered in the login form.
-    const userData = await Users.findOne({ where: { email: req.body.email } });
+    const userData = await User.findOne({ where: { username: req.body.username } });
     // If the email is incorrect, redirect the user to the login page.
     if (!userData) {
       res.render('login');

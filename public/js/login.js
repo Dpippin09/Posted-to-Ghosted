@@ -2,15 +2,14 @@
 const loginFormHandler = async (event) => {
     // Stop the browser from submitting the form by default so we can do so with JavaScript.
     event.preventDefault();
-    // Get the email and password from the login form
-    const email = document.querySelector('#email-login').value.trim();
+    const userName = document.querySelector('#username-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
     // If the email and password fields aren't empty, send the user data to the login route.
-    if (email && password) {
+    if (userName && password) {
       try {
-        const response = await fetch('/api/users/login', {
+        const response = await fetch('/api/user/login', {
           method: 'POST',
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ userName, password }),
           headers: { 'Content-Type': 'application/json' },
         });
         // If the response is okay, redirect the user to the homepage.

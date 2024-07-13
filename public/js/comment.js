@@ -5,7 +5,7 @@ const newCommentHandler = async (event) => {
     const comment_text = document.querySelector('#comment_text').value?.trim();
     // This if statment checks if the post_id and comment_text exist.
     if (post_id && comment_text) {
-      const response = await fetch(`/api/comments/newComment`, {
+      const response = await fetch(`/api/comment/newComment`, {
         method: 'POST',
         body: JSON.stringify({ post_id, comment_text }),
         headers: {

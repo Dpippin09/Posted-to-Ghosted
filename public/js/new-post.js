@@ -4,13 +4,13 @@ const newPost = async (event) => {
     event.preventDefault();
     // These two variables are used to grab the title and content of the post by selecting the elements by their id and trimming the whitespace.
     const title = document.querySelector('#post-title').value.trim();
-    const post_content = document.querySelector('#post-content').value.trim();
+    const content = document.querySelector('#post-content').value.trim();
     // The if statement here is used to iterate through the title and the content to check if they are not empty.
-    if (title && post_content) {
+    if (title && content) {
       // This variable is used to make a fetch request to the server to create a new post if the title and content are not empty.
-      const response = await fetch('/dashboard/posts/new', {
+      const response = await fetch('/dashboard/post/new', {
         method: 'POST',
-        body: JSON.stringify({ title, post_content }),
+        body: JSON.stringify({ title, content }),
         headers: { 'Content-Type': 'application/json' },
       });
       // This if statement is used to check if the response is ok and if it is not, an alert is displayed.

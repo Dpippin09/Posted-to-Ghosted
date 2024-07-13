@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
       ];
       // This code is used to make a fetch request to the server to edit the post if the title and the content are not empty.
       if (title && content) {
-        const response = await fetch(`/api/posts/editPost/${id}`, {
+        const response = await fetch(`/api/post/editPost/${id}`, {
           method: 'PUT',
-          body: JSON.stringify({ title, post_content: content }),
+          body: JSON.stringify({ title, content: content }),
           headers: { 'Content-Type': 'application/json' },
         });
         // This code is used to check if the response is ok and if it is not, an alert is displayed.
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.toString().split('/').length - 1
       ];
       // This code is used to make a fetch request to the server to delete the post.
-      const response = await fetch(`/api/posts/editpost/${id}`, {
+      const response = await fetch(`/api/post/editpost/${id}`, {
         method: 'DELETE',
       });
       // This if statement is used to check if the response is ok and if it is not, an alert is displayed.

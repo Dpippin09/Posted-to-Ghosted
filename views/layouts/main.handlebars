@@ -1,28 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </nav>
+      <ul>
+        <!-- If the user is logged in, display the Dashboard and Logout links otherwise redirect to the login page. -->
+        <li><a
+            href='/'
+            class='hover-blue'
+          >Home</a></li>
+        {{#if loggedIn}}
+          <li><a
+              href='/dashboard'
+              class='hover-blue'
+            >Dashboard</a></li>
+        {{else}}
+          <li><a
+              href='/login'
+              class='hover-blue'
+            >Dashboard</a></li>
+        {{/if}}
+        {{#if loggedIn}}
+          <li><a
+              href='/logout'
+              id='logout'
+              class='hover-blue'
+            >Logout</a></li>
+        {{else}}
+          <li><a
+              href='/login'
+              id='login-form'
+              class='hover-blue'
+            >Login</a></li>
+        {{/if}}
+      </ul>
     </header>
-
-    {{{body}}}
-
+    <!-- The body of the page will be rendered here. -->
+    <main>
+      {{{body}}}
+    </main>
     <footer>
-        <p>&copy; 2023 My Website</p>
+      <p>&copy; 2024 Dev Portal</p>
     </footer>
-
-    <script src="/js/script.js"></script>
-</body>
+  </body>
+  <!-- If the user is logged in, display the logout script. -->
+  {{#if loggedIn}}
+    <script src='/js/logout.js'></script>
+  {{/if}}
 </html>

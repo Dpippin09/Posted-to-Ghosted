@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { User } = require('../models');
-const withAuth = require('../utils/auth');
+const { User } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // POST register a new user
 router.post('/register', async (req, res) => {
+  console.log(req.body);
   try {
     const newUser = await User.create(req.body);
     req.session.save(() => {

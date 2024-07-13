@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { Post } = require('../models');
-const withAuth = require('../utils/auth');
+const { Post } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 // GET all posts
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
   try {
     const postData = await Post.findAll();
     res.status(200).json(postData);
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST a new post (with authentication)
-router.post('/', withAuth, async (req, res) => {
+router.post('/newpost', withAuth, async (req, res) => {
   try {
     const newPost = await Post.create({
       ...req.body,

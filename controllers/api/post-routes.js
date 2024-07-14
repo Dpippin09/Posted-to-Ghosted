@@ -1,71 +1,82 @@
-const express = require('express');
-const router = express.Router();
+// These variables are for importing the necessary modules, and they will use the endpoint of /api/posts.
+const router = require('express').Router();
 const { Post } = require('../../models');
 const withAuth = require('../../utils/auth');
-
-// GET all posts
-router.get('/all', async (req, res) => {
+// Route to get a new post.
+router.get('/new', withAuth, async (req, res) => {
   try {
-    const postData = await Post.findAll();
-    res.status(200).json(postData);
+    // If the user is logged in, the newPost template is rendered.
+    res.render('newPost', {
+      loggedIn: req.session.logged_in,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
-// GET a single post by id
-router.get('/:id', async (req, res) => {
+// Route to create a new post.
+router.post('/new', withAuth, async (req, res) => {
   try {
-    const postData = await Post.findByPk(req.params.id);
-    if (!postData) {
-      res.status(404).json({ message: 'No post found with this id!' });
-      return;
-    }
-    res.status(200).json(postData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// POST a new post (with authentication)
-router.post('/newpost', withAuth, async (req, res) => {
-  try {
+    // The new post is created with the title and content from the request body and the user_id from the session.
     const newPost = await Post.create({
       ...req.body,
-      userId: req.session.userId,
+      user_id: req.session.user_id,
     });
+    // If the new post is created, a 200 status is returned, otherwise a 400 status is returned.
     res.status(200).json(newPost);
   } catch (err) {
     res.status(400).json(err);
   }
 });
-
-// PUT to update a post by id (with authentication)
-router.put('/:id', withAuth, async (req, res) => {
+// Route to get a specific post.
+router.get('/editPost/:id', withAuth, async (req, res) => {
   try {
-    const postData = await Post.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!postData[0]) {
+    // The post data is found by the primary key of the post.
+    const postData = await Post.findByPk(req.params.id);
+    if (!postData) {
       res.status(404).json({ message: 'No post found with this id!' });
       return;
     }
+    // The post data is serialized.
+    const post = postData.get({ plain: true });
+    // The editPost template is rendered with the post data and the logged_in status.
+    res.render('editPost', { post, loggedIn: req.session.logged_in });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+// Route to update a post.
+router.put('/editpost/:id', withAuth, async (req, res) => {
+  try {
+    // The post data is updated with the title and content from the request body.
+    const postData = await Post.update(req.body, {
+      // The post is found by the primary key of the post.
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
+    });
+    // If the post data is not found, a 404 status is returned.
+    if (!postData) {
+      res.status(404).json({ message: 'No post found with this id!' });
+      return;
+    }
+    // If the post data is updated, a 200 status is returned.
     res.status(200).json(postData);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
-// DELETE a post by id (with authentication)
-router.delete('/:id', withAuth, async (req, res) => {
+// Route to delete a post.
+router.delete('/editpost/:id', withAuth, async (req, res) => {
   try {
+    // The post data is destroyed by the primary key of the post.
     const postData = await Post.destroy({
       where: {
         id: req.params.id,
+        user_id: req.session.user_id,
       },
     });
+    // If the post data is not found, a 404 status is returned.
     if (!postData) {
       res.status(404).json({ message: 'No post found with this id!' });
       return;
@@ -75,5 +86,5 @@ router.delete('/:id', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
+// Export the router.
 module.exports = router;

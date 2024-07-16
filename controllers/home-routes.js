@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, Users, Comment } = require('../models');
+const { Post, User, Comment } = require('../models');
 // These endpoints will use the / route
 // Create a get route for the homepage
 router.get('/', async (req, res) => {
@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   try {
     // Find all posts and include the user that posted the comment
     const allPosts = await Post.findAll({
-      include: [Users],
+      include: [User],
     });
     // Map over the posts and serialize them
     const postArray = allPosts.map((post) => post.get({ plain: true }));
@@ -23,12 +23,12 @@ router.get('/dashboard', async (req, res) => {
   // Try catch block to catch errors.
   try {
     // Find all posts and include the user that posted the comment.
-    const userLogged = await Users.findByPk(req.session.user_id, {});
+    const userLogged = await User.findByPk(req.session.user_id, {});
     const allPosts = await Post.findAll({
       where: {
         user_id: req.session.user_id,
       },
-      include: [Users]
+      include: [User]
     });
     // Map over the userLogged posts and serialize them.
     const postArray = allPosts.map((post) => post.get({ plain: true }));
@@ -106,7 +106,7 @@ router.get('/post/:id', async (req, res) => {
   try {
     // Find the post by the primary key and include the user that posted the comment.
     const postData = await Post.findByPk(req.params.id, {
-      include: [Users, { model: Comment, include: [Users] }],
+      include: [User, { model: Comment, include: [User] }],
     });
     // If the post is not found, return a 404 status.
     const post = postData.get({ plain: true });
